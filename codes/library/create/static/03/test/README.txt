@@ -1,0 +1,1 @@
+gfortran -o testprj main.f90 ../mods.a -J../

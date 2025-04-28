@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.25 FATAL_ERROR)
+
+project(testprj LANGUAGES Fortran)
+
+get_property(_variableNames DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VARIABLES)
+
+list (SORT _variableNames)
+foreach (_variableName ${_variableNames})
+    string( TOUPPER ${_variableName} upperVarName )
+    string ( FIND ${upperVarName} "FORTRAN" myloc )
+    if ( myloc GREATER_EQUAL 0 )
+        if ( _variableName MATCHES "CMAKE_Fortran_COMPILER_ID_TOOL_MATCH_REGEX" )
+            message( STATUS "HELLO ${_variableName}=${upperVarName}" )
+        elseif ( _variableName MATCHES "CMAKE_Fortran_COMPILER_ID_VERSION_INFO" )
+            message( STATUS "HAHA ${_variableName}=${upperVarName}" )
+        else ()
+            get_directory_property(_variableValue DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DEFINITION ${_variableName})
+            message( STATUS "${_variableName}=${_variableValue}" )
+        endif ()
+    endif ()    
+endforeach()
